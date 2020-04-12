@@ -24,12 +24,35 @@ def dibujar_tablero(elementos):
 
 
 def empezar_onclick():
+    global n, N, LARGO, ALTO, DIMENSION_VENTANA, generaciones, \
+        generacion, pantalla, is_paused, pause_play, iterator
     if input_n.get_value().isdigit() and input_N.get_value().isdigit():
-        n = int(input_n.get_value())
-        N = int(input_N.get_value())
-        if n > 1 and N < n * n:
-            if n <= 300:
-                pass
+        _n = int(input_n.get_value())
+        _N = int(input_N.get_value())
+        if _n > 1 and _N < _n * _n:
+            if _n <= 300:
+                n = _n
+                N = _N
+                LARGO = ALTO = (601 - (n + 1)) // n
+                print(n * LARGO + (n + 1) * MARGEN)
+
+                # Se actualiza la dimension de la ventana a la necesaria.
+                DIMENSION_VENTANA = [900, n * LARGO + (n + 1) * MARGEN]
+
+                generaciones = Game(n, N)
+                pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
+
+                is_paused = True
+                pause_play = pygame.image.load('img/play.png').convert_alpha()
+
+                iterator = iter(generaciones)
+
+                try:
+                    generacion = next(iterator)
+                    dibujar_tablero(generacion.vivos())
+                except StopIteration:
+                    pass
+
             else:
                 thorpy.launch_blocking_alert(title='Error',
                                              text='¡Lo sentimos! El tamaño del tablero no puede ser mayor a 300.',
@@ -93,9 +116,9 @@ pantalla.fill(NEGRO)
 
 # Creamos imagen (convert_alpha: fondo transparente)
 pause_play = pygame.image.load('img/play.png').convert_alpha()
-rect_pause_play = pantalla.blit(pause_play, (650, 260))
+rect_pause_play = pantalla.blit(pause_play, (700, 260))
 nextt = pygame.image.load('img/next.png').convert_alpha()
-rect_next = pantalla.blit(nextt, (700, 260))
+rect_next = pantalla.blit(nextt, (750, 260))
 
 is_paused = True
 
@@ -138,10 +161,12 @@ while not hecho:
                     pause_play = pygame.image.load('img/pause.png').convert_alpha()
                 else:
                     pause_play = pygame.image.load('img/play.png').convert_alpha()
-                    pause_play = pygame.image.load('img/play.png').convert_alpha()
                 is_paused = not is_paused
             elif rect_next.collidepoint(pos):
-                pass
+                try:
+                    generacion = next(iterator)
+                except StopIteration:
+                    pass
 
         menu.react(event)  # the menu automatically integrate your elements
 
@@ -155,8 +180,8 @@ while not hecho:
 
     dibujar_tablero(generacion.vivos())
 
-    rect_pause_play = pantalla.blit(pause_play, (650, 260))
-    rect_next = pantalla.blit(nextt, (700, 260))
+    rect_pause_play = pantalla.blit(pause_play, (700, 260))
+    rect_next = pantalla.blit(nextt, (750, 260))
 
     box.blit()
     box.update()
