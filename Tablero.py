@@ -1,6 +1,6 @@
 import pygame
 import thorpy
-import os
+import os, sys
 
 import Grafico
 from Game import Game
@@ -197,5 +197,4 @@ while not hecho:
 
 # Cerramos la ventana y salimos.
 pygame.quit()
-Grafico.graficar()
-
+Grafico.main()

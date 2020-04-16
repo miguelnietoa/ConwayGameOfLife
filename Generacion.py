@@ -62,6 +62,7 @@ class Generacion:
 
         # Creamos un diccionario y añadimos los elementos vivos y sus vecinos,
         # aquí se guardará el número de vecinos de las tuplas necesarias
+        # {(x1, y1): 4, (x2, y2): 3, ...}
         vecinos = dict()
         for x, y in self.elementos:
             vecinos[(x, y)] = 0
