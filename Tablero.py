@@ -1,6 +1,8 @@
 import pygame
 import thorpy
 import os
+
+import Grafico
 from Game import Game
 
 
@@ -13,8 +15,8 @@ def dibujar_tablero(elementos):
                               MARGEN + (MARGEN + ALTO) * row,
                               LARGO,
                               ALTO])
-    for element in elementos:
-        fila, columna = element
+    for tupla in elementos:
+        fila, columna = tupla
         pygame.draw.rect(pantalla,
                          ROJO,
                          [MARGEN + (MARGEN + LARGO) * columna,
@@ -25,7 +27,7 @@ def dibujar_tablero(elementos):
 
 def empezar_onclick():
     global n, N, LARGO, ALTO, DIMENSION_VENTANA, generaciones, \
-        generacion, pantalla, is_paused, pause_play, iterator
+        generacion, pantalla, is_paused, pause_play, iterator, list
     if input_n.get_value().isdigit() and input_N.get_value().isdigit():
         _n = int(input_n.get_value())
         _N = int(input_N.get_value())
@@ -34,7 +36,6 @@ def empezar_onclick():
                 n = _n
                 N = _N
                 LARGO = ALTO = (601 - (n + 1)) // n
-                print(n * LARGO + (n + 1) * MARGEN)
 
                 # Se actualiza la dimension de la ventana a la necesaria.
                 DIMENSION_VENTANA = [900, n * LARGO + (n + 1) * MARGEN]
@@ -49,7 +50,7 @@ def empezar_onclick():
 
                 try:
                     generacion = next(iterator)
-                    dibujar_tablero(generacion.vivos())
+                    list = generacion.vivos()
                 except StopIteration:
                     pass
 
@@ -85,9 +86,8 @@ DIMENSION_VENTANA = [900, 601]
 # Establecemos el margen entre las celdas.
 MARGEN = 1
 
-# Establecemos el LARGO y ALTO de cada celda de la retícula.
+# Calculamos el LARGO y ALTO de cada celda de la retícula.
 LARGO = ALTO = (DIMENSION_VENTANA[1] - (n + 1)) // n
-print(n * LARGO + (n + 1) * MARGEN)
 
 # Se actualiza la dimension de la ventana a la necesaria.
 DIMENSION_VENTANA = [900, n * LARGO + (n + 1) * MARGEN]
@@ -139,16 +139,17 @@ box.blit()
 box.update()
 
 iterator = iter(generaciones)
+generacion = None
 
 try:
     generacion = next(iterator)
-    dibujar_tablero(generacion.vivos())
+    list = generacion.vivos()
 except StopIteration:
     pass
 
 pygame.display.flip()
 
-# -------- Bucle Principal del Programa-----------
+# -------- Ciclo Principal del Programa-----------
 while not hecho:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -165,6 +166,7 @@ while not hecho:
             elif rect_next.collidepoint(pos):
                 try:
                     generacion = next(iterator)
+                    list = generacion.vivos()
                 except StopIteration:
                     pass
 
@@ -175,10 +177,11 @@ while not hecho:
     if not is_paused:
         try:
             generacion = next(iterator)
+            list = generacion.vivos()
         except StopIteration:
-            pass
+            list = []
 
-    dibujar_tablero(generacion.vivos())
+    dibujar_tablero(list)
 
     rect_pause_play = pantalla.blit(pause_play, (700, 260))
     rect_next = pantalla.blit(nextt, (750, 260))
@@ -189,8 +192,10 @@ while not hecho:
     # Avanzamos y actualizamos la pantalla con lo que hemos dibujado.
     pygame.display.flip()
 
-    # Limitamos a 10 fotogramas por segundo.
-    reloj.tick(10)
+    # Limitamos a 5 fotogramas por segundo.
+    reloj.tick(5)
 
 # Cerramos la ventana y salimos.
 pygame.quit()
+Grafico.graficar()
+

@@ -30,6 +30,7 @@ class Game:
         else:
             raise StopIteration
 
+    # Genera N tuplas aleatorias diferentes
     def generar_tuplas(self, N):
         count = 0
         while count < N:
