@@ -1,8 +1,7 @@
 import pygame
 import thorpy
-import os, sys
+import os
 
-import Grafico
 from Game import Game
 
 
@@ -69,6 +68,8 @@ def empezar_onclick():
                                      parent=None)
 
 
+print('iniciado animacion')
+
 # Definimos algunos colores
 NEGRO = (0, 0, 0)
 BLANCO = (255, 255, 255)
@@ -106,7 +107,7 @@ pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
 pygame.display.set_caption('Juego de la vida de Conway')
 
 # Iteramos hasta que el usuario pulse el botón de salir.
-hecho = False
+done = False
 
 # Lo usamos para establecer cuán rápido se refresca la pantalla.
 reloj = pygame.time.Clock()
@@ -140,7 +141,7 @@ box.update()
 
 iterator = iter(generaciones)
 generacion = None
-
+list = []
 try:
     generacion = next(iterator)
     list = generacion.vivos()
@@ -150,10 +151,10 @@ except StopIteration:
 pygame.display.flip()
 
 # -------- Ciclo Principal del Programa-----------
-while not hecho:
+while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            hecho = True
+            done = True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             # El usuario presiona el ratón. Se obtiene su posición.
             pos = pygame.mouse.get_pos()
@@ -197,4 +198,3 @@ while not hecho:
 
 # Cerramos la ventana y salimos.
 pygame.quit()
-Grafico.main()

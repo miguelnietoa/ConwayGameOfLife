@@ -8,7 +8,8 @@ from thorpy import Inserter
 from Game import Game
 
 
-def main():
+def start():
+    print('start Grafico')
     pygame.init()
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     pantalla = pygame.display.set_mode([850, 400])
