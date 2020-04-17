@@ -1,5 +1,6 @@
-import pygame
 import os
+import pygame
+import Animacion
 import Grafico
 
 print('iniciado Menu')
@@ -62,4 +63,4 @@ pygame.quit()
 if op == 1:
     Grafico.start()
 elif op == 2:
-    pass
+    Animacion.start()

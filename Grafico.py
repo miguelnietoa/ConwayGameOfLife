@@ -1,15 +1,13 @@
-import pygame, thorpy
-from matplotlib import pyplot as plt
-import numpy as np
 import os
-
-from thorpy import Inserter
+import numpy as np
+import pygame
+import thorpy
+from matplotlib import pyplot as plt
 
 from Game import Game
 
 
 def start():
-    print('start Grafico')
     pygame.init()
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     pantalla = pygame.display.set_mode([850, 400])
@@ -75,7 +73,7 @@ def start():
     text = thorpy.make_text('Digite los valores de entrada:')
     input_n = thorpy.Inserter(name='Tamaño de tablero (n):     ', value=str(n))
     input_N = thorpy.Inserter(name='Núm. células iniciales (N): ', value=str(N))
-    input_m: Inserter = thorpy.Inserter(name='Núm. de generaciones (m): ', value=str(m))
+    input_m = thorpy.Inserter(name='Núm. de generaciones (m): ', value=str(m))
     button = thorpy.make_button('Ver gráfico', func=graficar)
     box = thorpy.Box(elements=[text, input_n, input_N, input_m, button])
     # we regroup all elements on a menu, even if we do not launch the menu
