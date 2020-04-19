@@ -8,10 +8,8 @@ class Game:
     # Crea un tablero de n x n con N elementos iniciales
     # aleatorios. Los elementos son tuplas (x, y).
     def __init__(self, n, N):
-        self.elementos = []
         self.n = n
-        self.generar_tuplas(N)
-        self.inicio = Generacion(self, None, self.elementos)  # Generacion inicial
+        self.inicio = Generacion(self, None, self.generar_tuplas(N))  # Generacion inicial
 
     # Esto permite iterar sobre el juego
     # es decir , puede utilizar un para para
@@ -32,9 +30,11 @@ class Game:
 
     # Genera N tuplas aleatorias diferentes
     def generar_tuplas(self, N):
+        elementos = []
         count = 0
         while count < N:
             x = (rnd.randint(0, self.n - 1), rnd.randint(0, self.n - 1))
-            if x not in self.elementos:
-                self.elementos.append(x)
+            if x not in elementos:
+                elementos.append(x)
                 count += 1
+        return elementos

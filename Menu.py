@@ -3,7 +3,7 @@ import pygame
 import Animacion
 import Grafico
 
-print('iniciado Menu')
+
 pygame.init()
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pantalla = pygame.display.set_mode([600, 500])

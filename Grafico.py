@@ -45,11 +45,11 @@ def start():
                         except StopIteration:
                             break
                         k += 1
-
-                    plt.plot(num_gens, num_vivos, color='g', label='Vivos actualmente')
-                    plt.plot(num_gens, num_nacim, color='y', label='Nacimientos próximos')
-                    plt.plot(num_gens, num_muertes, color='r', label='Muertes próximas')
-                    plt.xlabel('Generaciones')
+                    plt.style.use('fivethirtyeight')
+                    plt.plot(num_gens, num_vivos, color='g', label='Vivos')
+                    plt.plot(num_gens, num_nacim, color='y', label='Nacimientos')
+                    plt.plot(num_gens, num_muertes, color='r', label='Muertes')
+                    plt.xlabel('Número de generaciones')
                     plt.ylabel('Frecuencia')
                     plt.title('Análisis del Juego de la Vida por generación')
                     plt.legend()

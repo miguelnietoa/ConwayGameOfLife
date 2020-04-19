@@ -34,21 +34,19 @@ class Generacion:
     # no estarán en la próxima generación, pero que sí están en la actual.
     def muertes(self):
         vecinos = self.calc_vecinos()
-        muertes = []
-        for tupla in self.elementos:
-            if vecinos[tupla] <= 1 or vecinos[tupla] >= 4:
-                muertes.append(tupla)
+        muertes = [tupla for tupla in self.elementos if vecinos[tupla] <= 1 or vecinos[tupla] >= 4]
         return muertes
 
     # Devuelve la generación siguiente, conformada por
     # los elementos que estarán presentes
     def siguiente(self):
         vecinos = self.calc_vecinos()
-        elementos = []
-        for tupla in vecinos:
-            num = vecinos[tupla]
-            if num == 3 or (tupla in self.elementos and num == 2):
-                elementos.append(tupla)
+        elementos = [tupla for tupla in vecinos if vecinos[tupla] == 3
+                     or (tupla in self.elementos and vecinos[tupla] == 2)]
+        # for tupla in vecinos:
+        #   num = vecinos[tupla]
+        #  if num == 3 or (tupla in self.elementos and num == 2):
+        #     elementos.append(tupla)
 
         return Generacion(self.game, self, elementos)
 
@@ -62,16 +60,17 @@ class Generacion:
 
         # Creamos un diccionario y añadimos los elementos vivos y sus vecinos,
         # aquí se guardará el número de vecinos de las tuplas necesarias
-        # {(x1, y1): 4, (x2, y2): 3, ...}
+        # {(x1, y1): k1, (x2, y2): k2, ...}
         vecinos = dict()
         for x, y in self.elementos:
             vecinos[(x, y)] = 0
             for a, b in around:
-                if x + a in range(self.game.n) and y + b in range(self.game.n):
+                if 0 <= x + a < self.game.n and 0 <= y + b < self.game.n:
                     vecinos[(x + a, y + b)] = 0
+
         # Calculamos los vecinos
         for x, y in self.elementos:
             for a, b in around:
-                if x + a in range(self.game.n) and y + b in range(self.game.n):
+                if 0 <= x + a < self.game.n and 0 <= y + b < self.game.n:
                     vecinos[(x + a, y + b)] += 1
         return vecinos
