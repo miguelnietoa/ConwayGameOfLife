@@ -23,8 +23,8 @@ class Game:
     # la siguiente generación en el juego .
     def __next__(self):
         if len(self.actual.vivos()) > 0:
-            actual, self.actual = self.actual, self.actual.siguiente()
-            return actual
+            self.actual = self.actual.siguiente()
+            return self.actual
         else:
             raise StopIteration
 

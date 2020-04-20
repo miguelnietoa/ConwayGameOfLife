@@ -1,7 +1,7 @@
 import pygame
 import thorpy
 import os
-
+import Menu
 from Game import Game
 
 
@@ -25,7 +25,7 @@ def start():
                               ALTO])
 
     def empezar_onclick():
-        nonlocal n, N, LARGO, ALTO, DIMENSION_VENTANA, generaciones, \
+        nonlocal n, N, LARGO, ALTO, DIMENSION_VENTANA, juego, \
             generacion, pantalla, is_paused, pause_play, iterator, list
         if input_n.get_value().isdigit() and input_N.get_value().isdigit():
             _n = int(input_n.get_value())
@@ -37,16 +37,12 @@ def start():
                     LARGO = ALTO = (601 - (n + 1)) // n
                     # Se actualiza la dimension de la ventana a la necesaria.
                     DIMENSION_VENTANA = [900, n * LARGO + (n + 1) * MARGEN]
-                    generaciones = Game(n, N)
+                    juego = Game(n, N)
                     pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
                     is_paused = True
                     pause_play = pygame.image.load('img/play.png').convert_alpha()
-                    iterator = iter(generaciones)
-                    try:
-                        generacion = next(iterator)
-                        list = generacion.vivos()
-                    except StopIteration:
-                        list = []
+                    iterator = iter(juego)
+                    list = juego.inicio.vivos()
                 else:
                     thorpy.launch_blocking_alert(title='Error',
                                                  text='¡Lo sentimos! El tamaño del tablero no puede ser mayor a 300.',
@@ -84,7 +80,7 @@ def start():
     # Se actualiza la dimension de la ventana a la necesaria.
     DIMENSION_VENTANA = [900, n * LARGO + (n + 1) * MARGEN]
 
-    generaciones = Game(n, N)
+    juego = Game(n, N)
 
     # Inicializamos pygame
     pygame.init()
@@ -130,14 +126,8 @@ def start():
     box.blit()
     box.update()
 
-    iterator = iter(generaciones)
-    generacion = None
-    list = []
-    try:
-        generacion = next(iterator)
-        list = generacion.vivos()
-    except StopIteration:
-        list = []
+    iterator = iter(juego)
+    list = juego.inicio.vivos()
 
     pygame.display.flip()
 
@@ -160,7 +150,7 @@ def start():
                         generacion = next(iterator)
                         list = generacion.vivos()
                     except StopIteration:
-                        list = []
+                        pass
 
             menu.react(event)  # the menu automatically integrate your elements
 
@@ -171,7 +161,7 @@ def start():
                 generacion = next(iterator)
                 list = generacion.vivos()
             except StopIteration:
-                list = []
+                pass
 
         dibujar_tablero(list)
 
@@ -189,3 +179,4 @@ def start():
 
     # Cerramos la ventana y salimos.
     pygame.quit()
+    Menu.start()

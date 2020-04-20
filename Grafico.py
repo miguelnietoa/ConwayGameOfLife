@@ -3,7 +3,7 @@ import numpy as np
 import pygame
 import thorpy
 from matplotlib import pyplot as plt
-
+import Menu
 from Game import Game
 
 
@@ -35,7 +35,10 @@ def start():
 
                     juego = Game(n, N)
                     iterador = iter(juego)
-                    k = 0
+                    num_vivos[0] = len(juego.inicio.vivos())
+                    num_nacim[0] = len(juego.inicio.nacimientos())
+                    num_muertes[0] = len(juego.inicio.muertes())
+                    k = 1
                     while k < m:
                         try:
                             generacion = next(iterador)
@@ -105,3 +108,4 @@ def start():
         # Limitamos a 60 fotogramas por segundo.
         reloj.tick(60)
     pygame.quit()
+    Menu.start()

@@ -23,10 +23,7 @@ class Generacion:
         probables = list(
             set(vecinos.keys()).difference(set(self.elementos))
         )
-        nacimientos = []
-        for tupla in probables:
-            if vecinos[tupla] == 3:
-                nacimientos.append(tupla)
+        nacimientos = [tupla for tupla in probables if vecinos[tupla] == 3]
         del probables, vecinos
         return nacimientos
 
@@ -35,19 +32,16 @@ class Generacion:
     def muertes(self):
         vecinos = self.calc_vecinos()
         muertes = [tupla for tupla in self.elementos if vecinos[tupla] <= 1 or vecinos[tupla] >= 4]
+        del vecinos
         return muertes
 
     # Devuelve la generación siguiente, conformada por
     # los elementos que estarán presentes
     def siguiente(self):
         vecinos = self.calc_vecinos()
-        elementos = [tupla for tupla in vecinos if vecinos[tupla] == 3
-                     or (tupla in self.elementos and vecinos[tupla] == 2)]
-        # for tupla in vecinos:
-        #   num = vecinos[tupla]
-        #  if num == 3 or (tupla in self.elementos and num == 2):
-        #     elementos.append(tupla)
-
+        elementos = [tupla for tupla in vecinos
+                     if vecinos[tupla] == 3 or (tupla in self.elementos and vecinos[tupla] == 2)]
+        del vecinos
         return Generacion(self.game, self, elementos)
 
     def calc_vecinos(self):
