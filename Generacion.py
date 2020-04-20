@@ -57,20 +57,16 @@ class Generacion:
         around = list(
             set(itertools.permutations([-1, -1, 1, 1, 0], 2))
         )
-
         # Creamos un diccionario y añadimos los elementos vivos y sus vecinos,
         # aquí se guardará el número de vecinos de las tuplas necesarias
         # {(x1, y1): k1, (x2, y2): k2, ...}
-        vecinos = dict()
-        for x, y in self.elementos:
-            vecinos[(x, y)] = 0
-            for a, b in around:
-                if 0 <= x + a < self.game.n and 0 <= y + b < self.game.n:
-                    vecinos[(x + a, y + b)] = 0
-
+        vecinos = dict.fromkeys(self.elementos, 0)
         # Calculamos los vecinos
         for x, y in self.elementos:
             for a, b in around:
                 if 0 <= x + a < self.game.n and 0 <= y + b < self.game.n:
-                    vecinos[(x + a, y + b)] += 1
+                    if (x + a, y + b) in vecinos:
+                        vecinos[(x + a, y + b)] += 1
+                    else:
+                        vecinos[(x + a, y + b)] = 1
         return vecinos

@@ -1,5 +1,5 @@
 from Generacion import Generacion
-import random as rnd
+import numpy as np
 
 
 # Clase iterable
@@ -14,7 +14,7 @@ class Game:
     # Esto permite iterar sobre el juego
     # es decir , puede utilizar un para para
     # recorrer las generaciones i.e.:
-    # for generacion in Game :
+    # for generacion in Game:
     def __iter__(self):
         self.actual = self.inicio
         return self
@@ -33,7 +33,7 @@ class Game:
         elementos = []
         count = 0
         while count < N:
-            x = (rnd.randint(0, self.n - 1), rnd.randint(0, self.n - 1))
+            x = (int(np.random.uniform(0, self.n)), int(np.random.uniform(0, self.n)))
             if x not in elementos:
                 elementos.append(x)
                 count += 1
