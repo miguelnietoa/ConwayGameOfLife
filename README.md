@@ -7,7 +7,7 @@ in Python using PyGame and ThorPy modules for the view and MatplotLib to generat
 * Any dead cell with three live neighbors becomes a live cell.
 * All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
-## How it works?
+# How it works?
 A board of size n × n is created and from N starting cells, located randomly,
  the game will start. From this, and with an input parameter m, 
  where m is the number of generations to display this simulation will 
