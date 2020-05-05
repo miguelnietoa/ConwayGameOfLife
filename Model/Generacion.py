@@ -17,7 +17,7 @@ class Generacion:
     # Lista ’list ’ con los elementos que, a partir del estado actual,
     # serán nuevos en la próxima generación
     def nacimientos(self):
-        vecinos = self.calc_vecinos()
+        vecinos = self.__calc_vecinos__()
 
         # Hallamos las tuplas que están en vecinos pero no en los elementos actualmente vivos
         probables = list(
@@ -30,7 +30,7 @@ class Generacion:
     # Lista ’list ’ con los elementos que, a partir del estado actual,
     # no estarán en la próxima generación, pero que sí están en la actual.
     def muertes(self):
-        vecinos = self.calc_vecinos()
+        vecinos = self.__calc_vecinos__()
         muertes = [tupla for tupla in self.elementos if vecinos[tupla] <= 1 or vecinos[tupla] >= 4]
         del vecinos
         return muertes
@@ -38,13 +38,13 @@ class Generacion:
     # Devuelve la generación siguiente, conformada por
     # los elementos que estarán presentes
     def siguiente(self):
-        vecinos = self.calc_vecinos()
+        vecinos = self.__calc_vecinos__()
         elementos = [tupla for tupla in vecinos
                      if vecinos[tupla] == 3 or (tupla in self.elementos and vecinos[tupla] == 2)]
         del vecinos
         return Generacion(self.game, self, elementos)
 
-    def calc_vecinos(self):
+    def __calc_vecinos__(self):
         # Generamos las tuplas que están alrededor del punto (0,0).
         # set: transforma objeto iterable a conjunto
         # (un conjunto en Python no tiene repetidos).

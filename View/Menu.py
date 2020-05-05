@@ -1,7 +1,6 @@
 import os
 import pygame
-import Animacion
-import Grafico
+from View import Animacion, Grafico
 
 
 def dibujar_texto(texto, btn_rect, fuente_render, color, pantalla):

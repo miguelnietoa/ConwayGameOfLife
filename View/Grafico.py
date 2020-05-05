@@ -3,8 +3,8 @@ import numpy as np
 import pygame
 import thorpy
 from matplotlib import pyplot as plt
-import Menu
-from Game import Game
+from View import Menu
+from Model.Game import Game
 
 
 def start():

@@ -1,4 +1,4 @@
-from Generacion import Generacion
+from Model.Generacion import Generacion
 import numpy as np
 
 
@@ -9,7 +9,7 @@ class Game:
     # aleatorios. Los elementos son tuplas (x, y).
     def __init__(self, n, N):
         self.n = n
-        self.inicio = Generacion(self, None, self.generar_tuplas(N))  # Generacion inicial
+        self.inicio = Generacion(self, None, self.__generar_tuplas__(N))  # Generacion inicial
 
     # Esto permite iterar sobre el juego
     # es decir , puede utilizar un para para
@@ -29,7 +29,7 @@ class Game:
             raise StopIteration
 
     # Genera N tuplas aleatorias diferentes
-    def generar_tuplas(self, N):
+    def __generar_tuplas__(self, N):
         elementos = []
         count = 0
         while count < N:
