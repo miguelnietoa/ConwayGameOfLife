@@ -40,7 +40,7 @@ def start():
                     juego = Game(n, N)
                     pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
                     is_paused = True
-                    pause_play = pygame.image.load('img/play.png').convert_alpha()
+                    pause_play = pygame.image.load('../img/play.png').convert_alpha()
                     iterator = iter(juego)
                     list = juego.inicio.vivos()
                 else:
@@ -103,9 +103,9 @@ def start():
     pantalla.fill(NEGRO)
 
     # Creamos imagen (convert_alpha: fondo transparente)
-    pause_play = pygame.image.load('img/play.png').convert_alpha()
+    pause_play = pygame.image.load('../img/play.png').convert_alpha()
     rect_pause_play = pantalla.blit(pause_play, (700, 260))
-    nextt = pygame.image.load('img/next.png').convert_alpha()
+    nextt = pygame.image.load('../img/next.png').convert_alpha()
     rect_next = pantalla.blit(nextt, (750, 260))
 
     is_paused = True
@@ -141,9 +141,9 @@ def start():
                 pos = pygame.mouse.get_pos()
                 if rect_pause_play.collidepoint(pos):
                     if is_paused:
-                        pause_play = pygame.image.load('img/pause.png').convert_alpha()
+                        pause_play = pygame.image.load('../img/pause.png').convert_alpha()
                     else:
-                        pause_play = pygame.image.load('img/play.png').convert_alpha()
+                        pause_play = pygame.image.load('../img/play.png').convert_alpha()
                     is_paused = not is_paused
                 elif rect_next.collidepoint(pos):
                     try:
